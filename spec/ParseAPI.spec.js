@@ -687,4 +687,22 @@ describe('miscellaneous', function() {
     });
   });
 
+  it('request with where condition', done => {
+    var headers = {
+      'Content-Type': 'application/octet-stream',
+      'X-Parse-Application-Id': 'test',
+      'X-Parse-REST-API-Key': 'rest'
+    };
+    request.get({
+      headers: headers,
+      url: 'http://localhost:8378/1/classes/TestObject',
+      data: 'where={"foo":{"$exists":true}}'
+    }, (error, response, body) => {
+      expect(error).toBe(null);
+      var b = JSON.parse(body);
+      expect(b.results).toEqual([]);
+      done();
+    });
+  });
+
 });
